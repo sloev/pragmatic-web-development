@@ -1,0 +1,39 @@
+{
+  "name": "saysheap",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "@altrx/gundb-expo-sqlite-adapter": "^0.1.1",
+    "@johmun/vue-tags-input": "^2.1.0",
+    "expo-sqlite": "^11.6.0",
+    "gun": "^0.2020.1239",
+    "hyperid": "^3.1.1",
+    "js-sha256": "^0.10.1",
+    "latlon-geohash": "^2.0.0",
+    "maplibre-gl": "^3.3.1",
+    "nanoid": "^5.0.1",
+    "node-lmdb": "^0.10.0",
+    "protomaps-leaflet": "^1.24.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.3.3",
+    "@vitejs/plugin-basic-ssl": "^1.0.1",
+    "@vitejs/plugin-vue": "^4.3.4",
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
+    "@vue/eslint-config-prettier": "^8.0.0",
+    "eslint": "^8.49.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "leaflet": "^1.9.4",
+    "prettier": "^3.0.3",
+    "vite": "^4.4.9"
+  }
+}

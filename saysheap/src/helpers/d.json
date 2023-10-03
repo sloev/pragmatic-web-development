@@ -1,0 +1,41 @@
+{
+    "u": {
+        "1": {
+            "2": {
+                "0": {
+                    "f": {
+                        "w": {
+                            "x": {
+                                "r": {
+                                    "h": {
+                                        "1": {
+                                            "BiFxxSQpY8fybuQpZv8UklRTvBUsVdQXjggGUziPJOQ.wc654AZ7Z71IMV5luQg0purGxXBVdkZ7dC-T3qRwERY": {
+                                                "5b48e680-de49-4f8f-8324-85e0b4b98730": {
+                                                    "author": {
+                                                        "pub": "BiFxxSQpY8fybuQpZv8UklRTvBUsVdQXjggGUziPJOQ.wc654AZ7Z71IMV5luQg0purGxXBVdkZ7dC-T3qRwERY",
+                                                        "username": "foobarbas"
+                                                    },
+                                                    "date": 1695151432318,
+                                                    "lat": 52.2,
+                                                    "lon": 0.12,
+                                                    "tags": {
+                                                        "cat": "cat",
+                                                        "lol": "lol"
+                                                    },
+                                                    "geohash": "u120fwxrh1",
+                                                    "id": "5b48e680-de49-4f8f-8324-85e0b4b98730",
+                                                    "image": "foo",
+                                                    "secret_hash": "25db323817a93cda07e9ec85ea799e17e3eb9cfa88f7c1062127e5edccc7768d"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
