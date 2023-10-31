@@ -1,31 +1,17 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
-import NavBar from "./components/NavBar.vue"
-import { onMounted } from 'vue'
-import { useSheepStore } from './store/store'
+import { RouterLink, RouterView } from "vue-router";
+import NavBar from "./components/NavBar.vue";
+import { onMounted, watch } from "vue";
+import { useSettingsStore } from "./store/settings";
 
-const store = useSheepStore();
-
-
-
-onMounted(() => {
-  setTimeout(() => {
-    store.setFollowMyLocation(true)
-
-  }, 500);
-})
 
 </script>
 
 <template>
   <div class="main">
-
     <RouterView />
     <NavBar />
-
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

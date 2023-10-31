@@ -3,14 +3,14 @@ import Banner from "../components/Banner.vue";
 import "leaflet/dist/leaflet.css";
 import { ref, watch, onMounted } from "vue";
 
-import LookingIcon from "../components/icons/icon.looking.gif";
+import LookingIcon from "../components/icons/icon.looking.webp";
 import LocationOnIcon from "../components/icons/icon.location.on.gif";
 import LocationOffIcon from "../components/icons/icon.location.off.gif";
 import WolfMarkerIcon from "../components/icons/icon.wolfmarker.png";
 
-import { useSheepStore } from "../store/store";
+import { useSettingsStore } from "../store/settings";
 
-const store = useSheepStore();
+const settingsStore = useSettingsStore();
 
 import L from "leaflet";
 
@@ -25,12 +25,11 @@ import * as protomapsL from "protomaps-leaflet";
 
 let map = null;
 let zoomLevel = 16;
-let wolfMarker = new L.Marker(store.currentLocation, { icon: wolfMarkerIcon });
+let wolfMarker = new L.Marker(settingsStore.currentLocation, { icon: wolfMarkerIcon });
 
 const panToPosition = () => {
-  console.warn("panning");
-  wolfMarker.setLatLng(store.currentLocation);
-  map.setView(store.viewPosition, map.getZoom(), {
+  wolfMarker.setLatLng(settingsStore.currentLocation);
+  map.setView(settingsStore.viewPosition, map.getZoom(), {
     animate: true,
     pan: {
       duration: 1,
@@ -41,7 +40,7 @@ const panToPosition = () => {
 const setupMap = () => {
   map = L.map("map", { zoomControl: false });
 
-  map.setView(store.viewPosition, zoomLevel);
+  map.setView(settingsStore.viewPosition, zoomLevel);
 
   var layer = protomapsL.leafletLayer({
     url: "https://api.protomaps.com/tiles/v2/{z}/{x}/{y}.pbf?key=7120db229cd222aa",
@@ -52,32 +51,21 @@ const setupMap = () => {
   layer.addInspector(map);
 
   map.on("moveend", function (e) {
-    store.setBoundingBox(map.getBounds());
+    settingsStore.setBoundingBox(map.getBounds());
   });
+  
   map.on("dragend", function (event) {
-    store.setBoundingBox(map.getBounds());
+    settingsStore.setBoundingBox(map.getBounds());
     var latlng = map.getCenter();
-    store.setViewPosition(latlng);
+    settingsStore.setViewPosition(latlng);
   });
 
-  watch(() => store.currentLocation, panToPosition);
-};
-
-const triggerPan = () => {
-  if (store.followMyLocation) {
-    store.setViewPosition(store.currentLocation)
-    panToPosition();
-  }
+  watch(() => settingsStore.viewPosition, panToPosition);
 };
 
 onMounted(() => {
   setupMap();
 });
-
-
-
-watch(() => store.followMyLocation, triggerPan);
-
 </script>
 
 <template>
@@ -85,7 +73,12 @@ watch(() => store.followMyLocation, triggerPan);
     <div id="map"></div>
 
     <transition name="looking-fade">
-      <img class="looking" v-if="!store.gpsInitialized" :src="LookingIcon" alt="" />
+      <img
+        class="looking"
+        v-if="settingsStore.gpsInitializing"
+        :src="LookingIcon"
+        alt=""
+      />
     </transition>
 
     <Banner></Banner>
@@ -94,11 +87,11 @@ watch(() => store.followMyLocation, triggerPan);
       class="follow"
       @click="
         () => {
-          store.setFollowMyLocation(!store.followMyLocation);
+          settingsStore.setFollowMyLocation(!settingsStore.followMyLocation);
         }
       "
     >
-      <img v-if="store.followMyLocation" :src="LocationOnIcon" alt="" />
+      <img v-if="settingsStore.followMyLocation" :src="LocationOnIcon" alt="" />
       <img v-else :src="LocationOffIcon" alt="" />
     </div>
   </div>
