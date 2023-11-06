@@ -7,6 +7,7 @@ import LookingIcon from "../components/icons/icon.looking.webp";
 import LocationOnIcon from "../components/icons/icon.location.on.gif";
 import LocationOffIcon from "../components/icons/icon.location.off.gif";
 import WolfMarkerIcon from "../components/icons/icon.wolfmarker.png";
+import NavBar from "../components/NavBar.vue";
 
 import { useSettingsStore } from "../store/settings";
 
@@ -53,7 +54,7 @@ const setupMap = () => {
   map.on("moveend", function (e) {
     settingsStore.setBoundingBox(map.getBounds());
   });
-  
+
   map.on("dragend", function (event) {
     settingsStore.setBoundingBox(map.getBounds());
     var latlng = map.getCenter();
@@ -70,50 +71,57 @@ onMounted(() => {
 
 <template>
   <div class="map-container">
+
     <div id="map"></div>
 
-    <transition name="looking-fade">
-      <img
-        class="looking"
-        v-if="settingsStore.gpsInitializing"
-        :src="LookingIcon"
-        alt=""
-      />
-    </transition>
 
-    <Banner></Banner>
 
-    <div
-      class="follow"
-      @click="
-        () => {
-          settingsStore.setFollowMyLocation(!settingsStore.followMyLocation);
-        }
-      "
-    >
+    <div class="follow" v-if="!settingsStore.gpsInitializing" @click="() => {
+        settingsStore.setFollowMyLocation(!settingsStore.followMyLocation);
+      }
+      ">
       <img v-if="settingsStore.followMyLocation" :src="LocationOnIcon" alt="" />
       <img v-else :src="LocationOffIcon" alt="" />
     </div>
+    <NavBar v-if="!settingsStore.gpsInitializing" />
+    <transition name="looking-fade">
+      <div class="looking" v-if="settingsStore.gpsInitializing" >
+        <img  :src="LookingIcon" alt="" />
+      </div>
+    </transition>
+
+    <Banner></Banner>
   </div>
 </template>
 
 <style scoped>
 .looking-fade-enter-active,
 .looking-fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 1.0s;
 }
 
 .looking-fade-enter,
 .looking-fade-leave-to
 
-/* .fade-leave-active below version 2.1.8 */ {
+/* .fade-leave-active below version 2.1.8 */
+  {
   opacity: 0;
 }
 
 .looking {
   position: absolute;
-  height: 100%;
-  z-index: 1;
+  width: 100%;
+  height:100%;
+  z-index: 15;
+  background-color: white;
+}
+.looking img {
+  position: relative;
+  top:15em;
+  height:30em;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
 }
 
 .follow {
@@ -122,7 +130,7 @@ onMounted(() => {
   right: 2em;
   bottom: 12em;
 
-  z-index: 2;
+  z-index: 10;
 }
 
 .follow img {
@@ -135,11 +143,13 @@ onMounted(() => {
   height: 100%;
   width: 100%;
   z-index: 0;
+  transition: opacity 0.5s;
+
 }
+
 .map-container {
   position: relative;
 
-  max-width: 600px;
   width: 100%;
   height: 100%;
 }
